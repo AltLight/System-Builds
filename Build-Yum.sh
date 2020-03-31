@@ -5,25 +5,21 @@
 #
 # Get Inital configuration.
 #
-# ./initial-config.sh
-#
 # Get Dependencies and update packages
 #
 FQDN=$(hostname --fqdn)
 sudo yum install epel-release nginx policycoreutils-devel createrepo yum-utils yum-cron -y
 #
-# Configure the Firewall and SeLinux
+# Configure the Firewall
 #
-# sudo sed -i "s^SELINUX=enforcing^SELINUX=disabled^" /etc/sysconfig/selinux
 sudo firewall-cmd --zone=public --add-service=http --permanent
 sudo firewall-cmd --zone=public --add-service=https --permanent
 sudo firewall-cmd --reload
 #
-# Create the NGINX/Yum Directory.
+# Create & Populate the Yum Directory.
 #
 sudo mkdir -p /var/www/html/repos/centos7
 #
-# Sync Centos & local repos:
 Repo_Dir=(base centosplus extras updates)
 #
 for Dir in ${Repo_Dir[@]}
@@ -89,4 +85,4 @@ sudo systemctl restart nginx
 sudo systemctl enable yum-cron
 sudo systemctl restart yum-cron
 #
-echo -e "\nThe url for the yum repo is:\n$FQDN"
+echo -e "\nThe url for the yum repo is:\nhttp://$FQDN"
