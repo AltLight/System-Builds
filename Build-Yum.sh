@@ -22,13 +22,11 @@ sudo mkdir -p /var/www/html/repos/centos7
 #
 Repo_Dir=(base centosplus extras updates)
 #
-for Dir in ${Repo_Dir[@]}
-do
-    sudo reposync -g -l -d -m --repoid=$Dir --newest-only --download-metadata --download_path=/var/www/html/repos/
-done
 # Create the Repo Data
 for Dir in ${Repo_Dir[@]}
 do
+    mkdir -p /var/www/html/repos/centos7/$Dir
+    sudo reposync -g -l -d -m --repoid=$Dir --newest-only --download-metadata --download_path=/var/www/html/repos/
     sudo touch /var/www/html/repos/centos7/$Dir/comps.xml
     sudo createrepo -g comps.xml /var/www/html/repos/centos7/$Dir/
 done
