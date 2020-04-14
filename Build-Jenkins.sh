@@ -31,8 +31,10 @@ sudo firewall-cmd --reload
 rpm=$(ls | grep jenkins*.rpm)
 if [ -z $rpm ]
 then
-    echo "No jenkins rpm was could be found in the current directory, please move or copy the jenkins rpm file to this current directory ($(pwd)) and run this script again.\n\naborting operations."
-    exit 1
+    echo "No jenkins rpm was could be found in the current directory ($(pwd)), trying to download from the internet..."
+    sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    sudo yum -y install jenkins
 else
     echo -e "The following rpm was found and will be installed:\n\n$rpm\n"
     sudo rpm -ivh $rpm
