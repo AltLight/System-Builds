@@ -31,7 +31,7 @@ sudo firewall-cmd --reload
 rpm=$(ls | grep jenkins*.rpm)
 if [ -z $rpm ]
 then
-    echo "No jenkins rpm was could be found in the current directory ($(pwd)), trying to download from the internet..."
+    echo -e "\n\nNo jenkins rpm was could be found in the current directory ($(pwd)), trying to download from the internet...\n\n"
     sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
     sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
     sudo yum -y install jenkins
