@@ -7,3 +7,5 @@ https://dzone.com/articles/adding-a-github-webhook-in-your-jenkins-pipeline
 https://www.theserverside.com/video/Tips-and-tricks-on-how-to-use-Jenkins-Git-Plugin
 #
 https://github.com/jenkinsci/gitlab-plugin/issues/375
+#
+https://help.github.com/en/enterprise/2.18/user/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
