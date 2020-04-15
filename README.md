@@ -1,5 +1,5 @@
 # Build_Jenkins
-Automated way of installing jenkins service on a server based on how the user answers the prompted questions.
+Automated way of installing jenkins service on a Centos 7 minimal server.
 
 Only tested against Centos 7
 
