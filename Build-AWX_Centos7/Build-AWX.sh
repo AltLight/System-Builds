@@ -37,9 +37,8 @@ sudo alternatives --set python /usr/bin/python3
 #
 # Download, Configure, & Install AWX
 ##################################################################################################################################
-mkdir -p /awx
-cd /awx
 git clone https://github.com/ansible/awx.git
+cd /awx
 #
 # Configure Inventory File:
 pw_list=(pg_password rabbitmq_password admin_password)
@@ -51,11 +50,11 @@ do
     pw_change="${pw}=''"
     pw_clean="${pw}="
     echo -e "\nusername=$pw\npassword=$def_password" > /.awxpws
-    sed -i "s^$pw_change^$pw_clean\'$def_password\'^"
+    sed -i "s^$pw_change^$pw_clean\'$def_password\'^" installer/inventory
 done
 unset def_password
 inv_key=$(openssl rand -base64 30)
-sed -i "S^secret_key=^secret_key=$inv_key^"
+sed -i "S^secret_key=awxsecret^secret_key=$inv_key^"
 echo -e "\nsecret_key=$inv_key" > /.awxpws
 unset inv_key
 #
