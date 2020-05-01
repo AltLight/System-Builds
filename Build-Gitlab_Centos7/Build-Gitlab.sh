@@ -1,6 +1,7 @@
 #! /bin/bash
 #
 # Install dependicies and updates:
+##################################################################################################################################
 sudo yum -y install epel-release
 sudo yum -y update
 sudo yum install -y curl policycoreutils-python openssh-server openssh-clients cockpit vim htop
@@ -8,6 +9,7 @@ sudo systemctl enable sshd
 sudo systemctl start sshd
 #
 # Configure the Firewall:
+##################################################################################################################################
 #
 sudo firewall-cmd --add-service=http --zone=public --permanent 
 sudo firewall-cmd --add-service=https --zone=public --permanent 
@@ -16,12 +18,14 @@ sudo firewall-cmd --add-port=9090/tcp --zone=public --permanent
 sudo firewall-cmd --reload
 #
 # Install and configure mail notification client:
+##################################################################################################################################
 #
 sudo yum install postfix -y
 sudo systemctl enable postfix
 sudo systemctl start postfix
 #
 # Add GitLab package repo and install <-- package:
+##################################################################################################################################
 #
 curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 #

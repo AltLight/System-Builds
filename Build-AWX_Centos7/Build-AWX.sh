@@ -60,4 +60,5 @@ unset inv_key
 #
 sudo mkdir -p /var/lib/pgdocker
 #
+cd installer/
 ansible-playbook -i inventory install.yml
