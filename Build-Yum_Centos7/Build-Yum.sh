@@ -38,7 +38,7 @@ Repo_Dir=(base centosplus extras updates)
 for Dir in ${Repo_Dir[@]}
 do
     mkdir -p /var/www/html/repos/centos7/$Dir
-    sudo reposync -g -l -d -m --repoid=$Dir --newest-only --download-metadata --download_path=/var/www/html/repos/$Dir
+    sudo reposync -g -l -d -m --repoid=$Dir --newest-only --download-metadata --download_path=/var/www/html/repos/centos7/$Dir
     sudo touch /var/www/html/repos/centos7/$Dir/comps.xml
     sudo createrepo -g comps.xml /var/www/html/repos/centos7/$Dir/
 done
@@ -58,7 +58,7 @@ touch repos.conf
 echo "server {
         listen   80;
         server_name  "$fqdn";
-        root   /var/www/html/repos;
+        root   /var/www/html/repos/centos7;
         location / {
                 index  index.php index.html index.htm;
                 autoindex on;	#enable listing of directory index
@@ -89,7 +89,7 @@ Local_Repos=(base centosplus extras updates)
 for Repo in ${Local_Repos[@]}
 do
     reposync -g -l -d -m --repoid=$Repo --newest-only --download-metadata --download_path=/var/www/html/repos/centos7/
-    createrepo -g comps.xml /var/www/html/repos/$Repo/  
+    createrepo -g comps.xml /var/www/html/repos/centos7/$Repo/  
 done' > /etc/cron.daily/repo-update
 #
 sudo sed -i "\$a59 23 * * * root /etc/cron.daily/repo-update" /etc/crontab
