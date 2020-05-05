@@ -16,11 +16,12 @@ touch local.repo
 # Create local repo file:
 Repo_Dir=(base centosplus extras updates)
 #
+full_domain=".$domain"
 for Dir in ${Repo_Dir[@]}
 do
     echo "[Local-Repository]
     name=$Dir
-    baseurl=http://yum.$domain/$Dir
+    baseurl=http://yum$full_domain/$Dir
     enabled=0
     gpgcheck=0
     " >> local.repo
