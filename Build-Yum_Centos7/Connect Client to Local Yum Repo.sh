@@ -10,24 +10,26 @@ fi
 #
 # Move all default repo config files to archive:
 sudo mkdir -p /opt/$domain/Archive
-sudo mv /etc/yum.repos.d/*.repo /opt/$domain/Archive
-touch local.repo
+sudo mv -f /etc/yum.repos.d/*.repo /opt/$domain/Archive
+
 #
 # Create local repo file:
 Repo_Dir=(base centosplus extras updates)
 #
-full_domain=".$domain"
 for Dir in ${Repo_Dir[@]}
 do
-    echo "[Local-Repository]
+    file_name="local-$dir.repo"
+    touch $file_name
+    dot_domian=".$domain"
+    echo -e "[Local-$Dir]
     name=$Dir
-    baseurl=http://yum$full_domain/$Dir
-    enabled=0
+    baseurl=http://yum$dot_domain/$Dir
+    enabled=1
     gpgcheck=0
-    " >> local.repo
+    " >> $file_name
+    mv $file_name /etc/yum.repos.d/$file_name
+    yum --enablerepo=local-$Dir
 done
-#
-sudo mv local.repo /etc/yum.repos.d/local.repo
 #
 # Clean Yum and update client
 sudo yum clean all

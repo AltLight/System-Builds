@@ -38,7 +38,7 @@ sudo alternatives --set python /usr/bin/python3
 # Download, Configure, & Install AWX
 ##################################################################################################################################
 git clone https://github.com/ansible/awx.git
-cd /awx
+cd awx
 #
 # Configure Inventory File:
 pw_list=(pg_password rabbitmq_password admin_password)

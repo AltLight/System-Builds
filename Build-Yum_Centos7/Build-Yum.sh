@@ -6,7 +6,7 @@
 # Get Inital configuration.
 #
 # Set script variables
-##################################################################################################################################
+#
 compname=$(hostname)
 if [ ! -z dnsdomainname ]
 then
@@ -16,7 +16,7 @@ else
 fi
 fqdn="$compname.$domain"
 # Get Dependencies and update packages
-##################################################################################################################################
+#
 sudo yum install epel-release  -y
 sudo yum install nginx policycoreutils-devel createrepo yum-utils yum-cron -y
 #
@@ -28,7 +28,7 @@ sudo firewall-cmd --zone=public --add-service=https --permanent
 sudo firewall-cmd --reload
 #
 # Create the NGINX/Yum Directory.
-##################################################################################################################################
+#
 sudo mkdir -p /var/www/html/repos/centos7
 #
 # Sync Centos & local repos:
@@ -38,13 +38,13 @@ Repo_Dir=(base centosplus extras updates)
 for Dir in ${Repo_Dir[@]}
 do
     mkdir -p /var/www/html/repos/centos7/$Dir
-    sudo reposync -g -l -d -m --repoid=$Dir --newest-only --download-metadata --download_path=/var/www/html/repos/centos7/$Dir
+    sudo reposync -g -l -d -m --repoid=$Dir --newest-only --download-metadata --download_path=/var/www/html/repos/$Dir
     sudo touch /var/www/html/repos/centos7/$Dir/comps.xml
     sudo createrepo -g comps.xml /var/www/html/repos/centos7/$Dir/
 done
 #
 # Configure NGINX
-##################################################################################################################################
+#
 grep nginx /var/log/audit/audit.log | audit2allow -M nginx
 semodule -i nginx.pp
 #
@@ -75,7 +75,7 @@ echo "server {
 sudo mv repos.congf /etc/nginx/conf.d/repos.conf
 #
 # Configure daily update cron job
-##################################################################################################################################
+#
 # Configure Cron update task:
 sudo touch /etc/cron.daily/repo-update
 #
