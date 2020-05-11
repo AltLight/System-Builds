@@ -29,17 +29,6 @@ sudo yum install -y epel-release
 yum update -y
 sudo yum install -y nginx policycoreutils-devel createrepo yum-utils yum-cron
 #
-# Configure the Firewall and SeLinux
-#
-# sudo sed -i "s^SELINUX=enforcing^SELINUX=disabled^" /etc/sysconfig/selinux
-sudo firewall-cmd --zone=public --add-service=http --permanent
-sudo firewall-cmd --zone=public --add-service=https --permanent
-sudo firewall-cmd --reload
-#
-sudo setsebool -P httpd_can_network_connect on
-setsebool -P httpd_read_user_content 1
-semodule -i nginx.pp
-#
 # Create the NGINX/Yum Directory.
 #
 sudo mkdir -p $urlpath
@@ -110,6 +99,17 @@ done' > /etc/cron.daily/repo-update
 #
 sudo sed -i "\$a59 23 * * * root /etc/cron.daily/repo-update" /etc/crontab
 sudo chmod 755 /etc/cron.daily/repo-update
+#
+# Configure the Firewall and SeLinux
+#
+# sudo sed -i "s^SELINUX=enforcing^SELINUX=disabled^" /etc/sysconfig/selinux
+sudo firewall-cmd --zone=public --add-service=http --permanent
+sudo firewall-cmd --zone=public --add-service=https --permanent
+sudo firewall-cmd --reload
+#
+sudo setsebool -P httpd_can_network_connect on
+setsebool -P httpd_read_user_content 1
+semodule -i nginx.pp
 #
 #  Enable and Start Services
 chcon -Rt httpd_sys_content_t /var/www/
